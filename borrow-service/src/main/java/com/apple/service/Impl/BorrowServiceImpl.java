@@ -1,5 +1,7 @@
 package com.apple.service.Impl;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.apple.client.BookClient;
 import com.apple.client.UserClient;
 import com.apple.entity.Book;
@@ -10,6 +12,8 @@ import com.apple.mapper.BorrowMapper;
 import com.apple.service.BorrowService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,6 +27,7 @@ public class BorrowServiceImpl implements BorrowService {
     @Resource
     BookClient bookClient;
 
+    @SentinelResource(value = "borrowDetails", blockHandler = "getUserBorrowDetailsFail") //方法级别的限流处理，粒度更细
     @Override
     public UserBorrowDetails getUserBorrowDetails(int uid) {
         List<Borrow> borrowList = borrowMapper.getBorrowByUid(uid);
@@ -40,5 +45,10 @@ public class BorrowServiceImpl implements BorrowService {
         //同样的使用stream流
         List<Book> books = borrowList.stream().map(borrow -> bookClient.getBook(borrow.getBid())).toList();
         return new UserBorrowDetails(user, books);
+    }
+
+    //限流后的处理方法
+    public UserBorrowDetails getUserBorrowDetailsFail(int uid, BlockException e) {
+        return new UserBorrowDetails(null, Collections.emptyList());
     }
 }

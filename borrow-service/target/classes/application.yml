@@ -12,3 +12,16 @@ spring:
     nacos:
       discovery:
         ephemeral: false
+        cluster-name: California
+        server-addr: localhost:9002
+    loadbalancer:
+      nacos:
+        enabled: true
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+      web-context-unify: false
+      block-page: /blocked
+feign:
+  sentinel:
+    enabled: true

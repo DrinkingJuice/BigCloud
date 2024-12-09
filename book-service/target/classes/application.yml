@@ -12,3 +12,8 @@ spring:
     nacos:
       discovery:
         ephemeral: false
+        #namespace: c57996c1-5604-41de-94be-78b3818dec9d
+        server-addr: localhost:9002
+    sentinel:
+      transport:
+        dashboard: localhost:8858

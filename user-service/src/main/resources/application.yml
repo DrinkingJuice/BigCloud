@@ -1,14 +1,8 @@
-server:
-  port: 8101
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/coudstudy
-    username: root
-    password: 123456
-  application:
-    name: user-service
   cloud:
     nacos:
       discovery:
-        ephemeral: false
+        server-addr: localhost:9002
+    sentinel:
+      transport:
+        dashboard: localhost:8858
