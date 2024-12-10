@@ -18,4 +18,19 @@ public class BookController {
         System.out.println("我被调用了！");
         return bookService.getBookById(bid);
     }
+
+
+    @RequestMapping("/book/remain/{bid}")
+    public int bookRemain(@PathVariable("bid") int uid) {
+        return bookService.getRemain(uid);
+    }
+
+    @RequestMapping("/book/borrow/{bid}")
+    public boolean bookBorrow(@PathVariable("bid") int uid) {
+        int remain = bookService.getRemain(uid);
+        if (remain > 0) {
+            return bookService.setRemain(uid, remain - 1);
+        }
+        return false;
+    }
 }

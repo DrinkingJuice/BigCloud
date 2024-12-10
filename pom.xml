@@ -26,6 +26,7 @@
 		<module>book-service</module>
 		<module>borrow-service</module>
 		<module>commons</module>
+		<module>auth-service</module>
 	</modules>
 	<scm>
 		<connection/>

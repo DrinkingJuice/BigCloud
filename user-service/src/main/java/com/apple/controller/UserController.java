@@ -6,6 +6,7 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,19 @@ public class UserController {
         System.out.println("我被调用了！");
         System.out.println("hello" + " " + hello);
         return userService.getUserById(uid);
+    }
+
+    @RequestMapping("/user/remain/{uid}")
+    public int getUserRemain(@PathVariable int uid) {
+        return userService.getRemain(uid);
+    }
+
+    @RequestMapping ("/user/borrow/{uid}")
+    public boolean borrowBook(@PathVariable int uid) {
+        int remain = userService.getRemain(uid);
+        if (remain > 0) {
+            return userService.updateUserBook(uid, remain - 1);
+        }
+        return false;
     }
 }

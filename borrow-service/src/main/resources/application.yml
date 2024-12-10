@@ -6,6 +6,9 @@ spring:
     url: jdbc:mysql://localhost:3306/coudstudy
     username: root
     password: 123456
+  data:
+    redis:
+      host: localhost
   application:
     name: borrow-service
   cloud:

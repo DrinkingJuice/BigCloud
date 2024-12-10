@@ -56,4 +56,15 @@ public class BorrowController {
                         @RequestParam(value = "c", required = false) String c) {
         return "请求成功" + a + "," + b + "," + c;
     }
+
+    @RequestMapping("/borrow/take/{uid}/{bid}")
+    JSONObject borrow(@PathVariable("uid") int uid,
+                      @PathVariable("bid") int bid){
+        borrowService.doBorrow(uid, bid);
+        JSONObject object = new JSONObject();
+        object.put("code", "200");
+        object.put("success", false);
+        object.put("message", "借阅成功！");
+        return object;
+    }
 }

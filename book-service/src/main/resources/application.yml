@@ -8,6 +8,9 @@ spring:
     password: 123456
   application:
     name: book-service
+  data:
+    redis:
+      host: localhost
   cloud:
     nacos:
       discovery:
